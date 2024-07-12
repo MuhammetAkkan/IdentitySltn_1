@@ -1,0 +1,110 @@
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Mono auto generated files
+mono_crash.*
+
+# VSCode auto generated files
+.vscode/
+.vscode/*
+
+# Visual Studio auto generated files
+.vs/
+.vs/*
+
+# Logs
+*.log
+*.tlg
+*.pdb
+
+# Windows image file caches
+Thumbs.db
+Thumbs.db.old
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Project-specific files
+Properties/
+appsettings.json
+appsettings.Development.json
+
+# System generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+.trash
+.nfs*
+
+# Compiled source
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Packages
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+*.nuget/
+
+# Publish outputs
+publish/
+publish/*
+
+# Local configuration files
+*.local
+
+# Rider
+.idea/
+*.sln.iml
+
+# Build directories
+**/obj/**
+**/bin/**
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+
+# Coverage reports
+coverage/
+coverage/*
+
+# Test results
+TestResults/
+TestResults/*
+
+# Additional configurations
+*.config
+*.bak
+*.tmp
+
+# Include wwwroot directory
+!wwwroot/
+
+# ASP.NET Core specific files
+**/appsettings*.json
+
+# Ignore publish directory
+publish/
+
+# Optional: Ignore secrets.json
+**/secrets.json
