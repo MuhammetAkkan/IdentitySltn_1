@@ -6,14 +6,18 @@ namespace WebUI.ViewModels
     public class CreateViewModel
     {
         [Required]
+        [DisplayName("Kullanıcı Adı")]
+        [DataType(DataType.Text, ErrorMessage = "Hata")]
         public string UserName { get; set; } = string.Empty;
 
         [Required]
         [EmailAddress]
-        [DataType(DataType.EmailAddress)]
+        [DisplayName("E-Mail")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "Bu mail adresi kullanılmakta.")]
         public string Email { get; set; } = string.Empty;
 
         [Required]
+        [DisplayName("Parola")]
         [DataType(DataType.Password)]
         public string Password { get; set; } = string.Empty;
 

@@ -24,23 +24,30 @@ namespace WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateViewModel model)
         {
-            if (ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
+                // Formda bir hata yok ise bu blok çalışır
                 var user = new IdentityUser
                 {
                     UserName = model.UserName,
                     Email = model.Email,
                 };
+
+                // Kullanıcı oluşturma işlemi
                 IdentityResult result = await _userManager.CreateAsync(user, model.Password);
-                if (result.Succeeded) 
+                if (result.Succeeded)
                 {
+                    // Kullanıcı başarıyla oluşturulmuşsa
                     return RedirectToAction("Index");
                 }
-                foreach (IdentityError error in result.Errors) 
+
+                // Kullanıcı oluşturulamazsa, hataları ModelState'e ekleyip kullanıcıya göster
+                foreach (IdentityError error in result.Errors)
                 {
-                    ModelState.AddModelError("",error.Description);
+                    ModelState.AddModelError("", error.Description);
                 }
             }
+
             return View(model);
         }
 
