@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using WebUI.Models;
 using WebUI.ViewModels;
 
 namespace WebUI.Controllers
 {
     public class UserController : Controller
     {
-        private UserManager<IdentityUser> _userManager;
-        public UserController(UserManager<IdentityUser> userManager)
+        private UserManager<AppUser> _userManager;
+        public UserController(UserManager<AppUser> userManager)
         {
             _userManager = userManager;
         }
@@ -27,10 +28,11 @@ namespace WebUI.Controllers
             if (ModelState.IsValid)
             {
                 // Formda bir hata yok ise bu blok çalışır
-                var user = new IdentityUser
+                var user = new AppUser
                 {
-                    UserName = model.UserName,
+                    UserName = model.FullName.Replace(" ", "").ToLower(),
                     Email = model.Email,
+                    FullName = model.FullName,
                 };
 
                 // Kullanıcı oluşturma işlemi

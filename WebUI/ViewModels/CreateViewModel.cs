@@ -5,10 +5,11 @@ namespace WebUI.ViewModels
 {
     public class CreateViewModel
     {
+
         [Required]
-        [DisplayName("Kullanıcı Adı")]
-        [DataType(DataType.Text, ErrorMessage = "Hata")]
-        public string UserName { get; set; } = string.Empty;
+        [DisplayName("Full Name")]
+        [DataType(DataType.Text)]
+        public string FullName { get; set; } = string.Empty;
 
         [Required]
         [EmailAddress]

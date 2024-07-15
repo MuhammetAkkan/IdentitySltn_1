@@ -17,13 +17,14 @@ namespace WebUI.Models
                 context.Database.Migrate();
             }
 
-            var userManager = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            var userManager = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<UserManager<AppUser>>();
 
             var user = await userManager.FindByNameAsync(adminUser);
             if (user == null) 
             {
-                user = new IdentityUser 
+                user = new AppUser 
                 {
+                    FullName = "Muhammet Akkan",
                     UserName = adminUser,
                     Email = "admin@akkan.com",
                     PhoneNumber = "5445907690",
