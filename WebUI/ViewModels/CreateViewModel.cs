@@ -5,7 +5,7 @@ namespace WebUI.ViewModels
 {
     public class CreateViewModel
     {
-
+        
         [Required]
         [DisplayName("Full Name")]
         [DataType(DataType.Text)]

@@ -26,8 +26,13 @@
                             <td>@user.Email</td>
                             <td>@user.PhoneNumber</td>
                             <td>
-                                <a href="" class="btn btn-sm btn-primary">Edit</a>
-                                <a href="" class="btn btn-sm btn-danger">Delete</a>
+                                <a asp-action="Edit" asp-route-id="@user.Id" asp-controller="User" class="btn btn-sm btn-primary">Edit</a>
+
+                                <form asp-action="Delete" method="post" style="display: inline-block;" onsubmit="return confirm('emin misiniz?')">
+                                    <input type="hidden" value="@user.Id" name="id"/>
+                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                </form>
+
                             </td>
                         </tr>
                     }
