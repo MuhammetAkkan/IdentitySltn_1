@@ -20,3 +20,18 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/* Checkbox kutular?n?n genel stili */
+input[type="checkbox"] {
+    accent-color: darkolivegreen;
+}
+
+    /* Checkbox kutusu seçildi?inde */
+    input[type="checkbox"]:checked {
+        accent-color: darkred;
+    }
+
+/* Checkbox etiketlerinin stili */
+.box-role {
+    color: darkolivegreen;
+}

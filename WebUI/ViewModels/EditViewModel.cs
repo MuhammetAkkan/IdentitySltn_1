@@ -21,6 +21,8 @@ namespace WebUI.ViewModels
 
         [DataType(DataType.Password)]
         [Compare(nameof(Password), ErrorMessage = "Parola Eşleşmiyor")]
-        public string? ConfirmPassword { get; set; } 
+        public string? ConfirmPassword { get; set; }
+
+        public IList<string>? SelectedRoles { get; set; }
     }
 }
