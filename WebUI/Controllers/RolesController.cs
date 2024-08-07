@@ -47,7 +47,39 @@ namespace WebUI.Controllers
             return View(roleModel);
         }
 
-        
+        public IActionResult Edit(string id)
+        {
+            if (id is null)
+                return View();
+
+            //burada kaldım.
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id)
+        {
+            if(string.IsNullOrEmpty(id))
+                return View();
+
+            var role = await _roleManager.FindByIdAsync(id);
+            if (role is null)
+                return View();
+
+            var result = await _roleManager.DeleteAsync(role);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index");
+            }
+
+            foreach(var err in result.Errors)
+            {
+                ModelState.AddModelError("role", err.Description);
+            }
+
+            return View();
+        }
 
         
     }

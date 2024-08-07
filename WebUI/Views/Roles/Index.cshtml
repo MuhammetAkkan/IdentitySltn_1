@@ -30,11 +30,14 @@
                             <td>@appRole.Name</td>
                             <td>Kullanıcı Listesi</td>
                             <td>
-                                <form method="post">
+                                <a asp-controller="Roles" asp-action="Edit" method="post">
                                     <a class="btn btn-primary">Edit</a>
-                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                    
+                                </a>
+                                <form asp-action="Delete" method="post" style="display: inline-block;" onsubmit="return confirm('emin misiniz?')">
+                                    <input type="hidden" value="@appRole.Id" name="id" />
+                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                                 </form>
-
                             </td>
                         </tr>
                     }
