@@ -12,7 +12,7 @@
                     <tr class="bg-dark text-white">
                         <th>Rol Adı</th>
                         <th>Kullanıcılar</th>
-                        
+                        <th>Aksiyonlar</th>
                     </tr>
                 </thead>
                 @if(Model.Count() == 0)
@@ -28,7 +28,9 @@
                     {
                         <tr class="bg-info">
                             <td>@appRole.Name</td>
-                            <td>Kullanıcı Listesi</td>
+                            <td asp-role-users="@appRole.Id"></td>
+                            @* asp-role-users adında bir tagHelper tanımladık, anlamı şu: bir metotum var ve appRole.Id i bilgi olarak alıyor. *@
+
                             <td>
                                 <a asp-controller="Roles" asp-action="Edit" method="post">
                                     <a class="btn btn-primary">Edit</a>

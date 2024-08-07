@@ -4,6 +4,6 @@ namespace WebUI.Models
 {
     public class AppRole : IdentityRole
     {
-        public int MyProperty { get; set; }
+        public string Name { get; set; } = null!;
     }
 }
