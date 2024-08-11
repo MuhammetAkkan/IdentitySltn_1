@@ -1,0 +1,62 @@
+﻿@model AppRole
+
+<h2>Edit Role</h2>
+<br />
+
+<form asp-controller="Roles" asp-action="Edit" method="post">
+    <div asp-validation-summary="All" class="text-dark">
+        <input type="hidden" asp-route-id="@Model.Id"/>
+        <div class="mb-3">
+            <label asp-for="@Model.Name" class="form-label"></label>
+            <input asp-for="@Model.Name" class="form-control" />
+        </div>
+    </div>
+    <button class="btn btn-primary" type="submit">Kaydet</button>
+</form>
+
+<table class="table table-striped table-bordered table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>Id</th>
+            <th>FullName</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if(ViewBag.Users is not null)
+        {
+            @if (ViewBag.Users.Count == 0)
+            {
+                <tr>
+                    <td colspan="4" class="text-center">
+                        User Yok
+                    </td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var user in ViewBag.Users)
+                {
+                    <tr class="bg-info">
+                        <td>@user.FullName</td>
+                        <td>@user.Email</td>
+                        <td>@user.PhoneNumber</td>
+                        <td>
+                            <a asp-controller="User" asp-action="Edit" asp-route-id="@user.Id" asp-controller="User" class="btn btn-sm btn-primary">Edit</a>
+
+                            <form asp-action="Delete" method="post" style="display: inline-block;" onsubmit="return confirm('emin misiniz?')">
+                                <input type="hidden" value="@user.Id" name="id" />
+                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+
+                        </td>
+                    </tr>
+                }
+            }
+            
+        }
+        
+    </tbody>
+</table>
