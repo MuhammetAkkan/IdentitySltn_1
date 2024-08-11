@@ -13,7 +13,7 @@ namespace WebUI.Controllers
             _roleManager = roleManager;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var result = _roleManager.Roles;
             return View(result);
@@ -59,7 +59,7 @@ namespace WebUI.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
-        {
+        {   
             if(string.IsNullOrEmpty(id))
                 return View();
 
