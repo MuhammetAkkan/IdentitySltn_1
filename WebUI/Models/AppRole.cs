@@ -4,6 +4,5 @@ namespace WebUI.Models
 {
     public class AppRole : IdentityRole
     {
-        
     }
 }

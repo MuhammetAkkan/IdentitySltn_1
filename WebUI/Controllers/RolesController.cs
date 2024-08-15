@@ -16,7 +16,7 @@ namespace WebUI.Controllers
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             var result = _roleManager.Roles;
             return View(result);
@@ -31,7 +31,7 @@ namespace WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(AppRole roleModel)
         {
-            if (ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
                 if (roleModel.Name is not null)
                     roleModel.Name = roleModel.Name.ToUpper();
@@ -41,12 +41,12 @@ namespace WebUI.Controllers
                 {
                     return RedirectToAction("Index");
                 }
-                foreach(var err in result.Errors)
+                foreach (var err in result.Errors)
                 {
                     ModelState.AddModelError("", err.Description);
                 }
+                return RedirectToAction("Index");
             }
-
             return View(roleModel);
         }
 
@@ -57,9 +57,9 @@ namespace WebUI.Controllers
             if (id is not null && role is not null && id == role.Id)
             {
                 //ViewBag aracılığıyla Users ı taşıdık.
-                if(role is not null && role.Name is not null)
+                if (role is not null && role.Name is not null)
                     ViewBag.Users = await _userManager.GetUsersInRoleAsync(role.Name);
-                
+
                 return View(role);
             }
             return RedirectToAction("Index");
@@ -69,11 +69,11 @@ namespace WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(string id, AppRole newRole)
         {
-            if(id is not null && ModelState.IsValid)
+            if (id is not null && ModelState.IsValid)
             {
                 var role = await _roleManager.FindByIdAsync(id);
 
-                if(role is not null)
+                if (role is not null)
                 {
                     role.Name = newRole.Name;
                     var result = await _roleManager.UpdateAsync(role);
@@ -82,7 +82,7 @@ namespace WebUI.Controllers
                     {
                         return RedirectToAction("Index");
                     }
-                    foreach(var err in result.Errors)
+                    foreach (var err in result.Errors)
                     {
                         ModelState.AddModelError("", err.Description);
                     }
@@ -93,24 +93,25 @@ namespace WebUI.Controllers
                         ViewBag.Users = await _userManager.GetUsersInRoleAsync(role.Name);
                     */
                     //yazılan kod yukarıda
+                    if(role is not null && role.Name is not null)
+                    {
+                        ViewBag.Users = await _userManager.GetUsersInRoleAsync(role.Name);
+                    }
 
-                    ViewBag.Users = await _userManager.GetUsersInRoleAsync(role.Name);
-                    if(ViewBag.Users is null || ViewBag.Users.Count() == 0)
+                    if (ViewBag.Users is null || ViewBag.Users.Count() == 0)
                     {
                         ViewBag.Users = string.Empty;
                     }
                 }
             }
             //sadee modelden gelen veriyi değil ayrıca Get teki ViewBag i burada sayfaya tekrar göndermemiz lazım.
-            
-            
             return View(newRole);
         }
 
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
-        {   
-            if(string.IsNullOrEmpty(id))
+        {
+            if (string.IsNullOrEmpty(id))
                 return View();
 
             var role = await _roleManager.FindByIdAsync(id);
@@ -123,14 +124,11 @@ namespace WebUI.Controllers
                 return RedirectToAction("Index");
             }
 
-            foreach(var err in result.Errors)
+            foreach (var err in result.Errors)
             {
                 ModelState.AddModelError("role", err.Description);
             }
-
             return View();
         }
-
-        
     }
 }
