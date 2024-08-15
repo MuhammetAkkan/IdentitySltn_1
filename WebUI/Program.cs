@@ -35,18 +35,23 @@ builder.Services.Configure<IdentityOptions>(options =>
 });
 
 //cookie opsiyonlama
-/*
-builder.Services.ConfigureApplicationCookie(options =>
-{
-    options.Cookie.HttpOnly = true; // Çerezin sadece HTTP isteklerinde kullanılmasını sağlar, JavaScript ile erişilemez.
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(30); // Çerezin geçerlilik süresi.
-    options.LoginPath = "/Account/Login"; // Oturum açma sayfasının yolu.
-    options.LogoutPath = "/Account/Logout"; // Oturum kapatma sayfasının yolu.
-    options.AccessDeniedPath = "/Account/AccessDenied"; // Erişim reddedildiğinde yönlendirilecek sayfa.
-    options.SlidingExpiration = true; // Kullanıcının oturumu belirli bir süre aktif olmadığında otomatik olarak çıkış yapar.
-});
-*/
 
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequireDigit = true; // Şifrede en az bir rakam gereksinimi
+    options.Password.RequiredLength = 5; // Minimum şifre uzunluğu
+    options.Password.RequireNonAlphanumeric = false; // Alfanümerik olmayan karakter gereksinimi yok
+    options.Password.RequireUppercase = false; // Şifrede en az bir büyük harf gereksinimi
+    options.Password.RequireLowercase = false; // Şifrede en az bir küçük harf gereksinimi
+
+    options.Lockout.MaxFailedAccessAttempts = 5; // Yanlış giriş denemesi limiti
+
+    options.User.RequireUniqueEmail = true; // E-posta adresi benzersiz olmalı
+    options.User.AllowedUserNameCharacters =
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+"; // Kullanıcı adı için izin verilen karakterler
+
+
+});
 
 var app = builder.Build();
 
@@ -64,6 +69,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapControllerRoute(
     name: "default",
