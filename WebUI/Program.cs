@@ -34,7 +34,7 @@ builder.Services.Configure<IdentityOptions>(options =>
 
 });
 
-//cookie opsiyonlama
+//Giriş cookie opsiyonlama
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
@@ -50,7 +50,21 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.User.AllowedUserNameCharacters =
         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+"; // Kullanıcı adı için izin verilen karakterler
 
+    options.SignIn.RequireConfirmedEmail = false; // Giriş yapmak için e-posta doğrulaması gereksinimi
+    options.SignIn.RequireConfirmedPhoneNumber = false; // Giriş yapmak için telefon numarası doğrulaması gereksinimi yok
+});
 
+//login opsiyonlama
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Account/Login";
+    options.AccessDeniedPath = "/Account/AccessDenied";
+    //birkaç özellik daha yazar mısın? Açıklamalarını kısaca yap tabii ki
+
+    options.SlidingExpiration = true; // Çerez süresini her işlemde uzatır, böylece oturum süresi uzatılır
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(10); //kimlik doğrulama çerezinin ömrü
+    options.Cookie.HttpOnly = true; // Çerezlere JavaScript tarafından erişilmesini engeller, güvenliği artırır
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // Çerezlerin sadece HTTPS üzerinden iletilmesini zorunlu kılar
 });
 
 var app = builder.Build();

@@ -1,0 +1,52 @@
+﻿@model LoginViewModel
+
+<h2>Login</h2>
+<br />
+
+<form asp-controller="Account" asp-action="Login" method="post">
+    <div asp-validation-summary="All" class="text-dark">
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label"></label>
+            <input type="email" asp-for="Email" class="form-control" id="emailInput" required />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Password" class="form-label"></label>
+            <input type="password" asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="form-check mb-3">
+            <input type="checkbox" asp-for="RememberMe" class="form-check-input" />
+            <label asp-for="RememberMe" class="form-check-label"></label>
+        </div>
+    </div>
+    <button class="btn btn-primary" type="submit">Kaydet</button>
+</form>
+
+<script>
+    document.getElementById("emailInput").addEventListener("blur", function () {
+        var emailField = this;
+        var messageSpan = emailField.nextElementSibling;
+
+        if (emailField.value.trim() === "") {
+            // Eğer email alanı boşsa, uyarı vermemek için tüm hata mesajlarını temizle
+            emailField.classList.remove("is-invalid");
+            messageSpan.textContent = "";
+            messageSpan.classList.remove("text-danger", "text-success");
+        } else if (!emailField.checkValidity()) {
+            // Eğer email formatı geçersizse, uyarı ver
+            emailField.classList.add("is-invalid");
+            messageSpan.textContent = "Geçerli bir email adresi giriniz.";
+            messageSpan.classList.add("text-danger");
+            messageSpan.classList.remove("text-success");
+        } else {
+            // Eğer email formatı geçerliyse, hata mesajını kaldır
+            emailField.classList.remove("is-invalid");
+            messageSpan.textContent = "Geçerli";
+            messageSpan.classList.add("text-success");
+            messageSpan.classList.remove("text-danger");
+        }
+    });
+</script>
+
+
