@@ -22,31 +22,3 @@
     </div>
     <button class="btn btn-primary" type="submit">Kaydet</button>
 </form>
-
-<script>
-    document.getElementById("emailInput").addEventListener("blur", function () {
-        var emailField = this;
-        var messageSpan = emailField.nextElementSibling;
-
-        if (emailField.value.trim() === "") {
-            // Eğer email alanı boşsa, uyarı vermemek için tüm hata mesajlarını temizle
-            emailField.classList.remove("is-invalid");
-            messageSpan.textContent = "";
-            messageSpan.classList.remove("text-danger", "text-success");
-        } else if (!emailField.checkValidity()) {
-            // Eğer email formatı geçersizse, uyarı ver
-            emailField.classList.add("is-invalid");
-            messageSpan.textContent = "Geçerli bir email adresi giriniz.";
-            messageSpan.classList.add("text-danger");
-            messageSpan.classList.remove("text-success");
-        } else {
-            // Eğer email formatı geçerliyse, hata mesajını kaldır
-            emailField.classList.remove("is-invalid");
-            messageSpan.textContent = "Geçerli";
-            messageSpan.classList.add("text-success");
-            messageSpan.classList.remove("text-danger");
-        }
-    });
-</script>
-
-

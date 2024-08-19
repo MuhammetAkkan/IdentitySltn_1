@@ -22,67 +22,59 @@ namespace WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel loginModel)
         {
-            if(loginModel is null)
-                return View(loginModel);
-
             if (ModelState.IsValid)
             {
-                if(loginModel.Email is not null && loginModel.Password is not null)
+                var user = await _userManager.FindByEmailAsync(loginModel.Email);
+                //bu email e göre kayıtlı veriyi bul.
+
+                if (user is not null)
                 {
-                    var user = await _userManager.FindByEmailAsync(loginModel.Email);
+                    //Login işlemini signInManager sağlamakta
+                    //ayrıca parolayı test etmek zorunda değiliz zaten bunu bizim yerimize sigInManager yapıyor.
+                    var result = await _signInManager.PasswordSignInAsync(user, loginModel.Password, isPersistent:true, lockoutOnFailure: false); //password ile giriş yap metotu diyebiliriz.
 
-                    if (user is not null)
+                    if (result.Succeeded)
                     {
-                        //Login işlemini signInManager sağlamakta
-                        //ayrıca parolayı test etmek zorunda değiliz zaten bunu bizim yerimize sigInManager yapıyor.
-                        var result = await _signInManager.PasswordSignInAsync(user, loginModel.Password, loginModel.RememberMe, lockoutOnFailure:false);
-                        //bu metotu iyi anla
-                        if (result.Succeeded)
-                        {
-                            await _userManager.ResetAccessFailedCountAsync(user);
-                            //cookie ayarlarında yanlış girme sayısı vardı biz şimdi onu sıfırladık.
-                            await _userManager.SetLockoutEndDateAsync(user, DateTime.Now.AddMinutes(30));
-                            //yanlış giriş yapma durumunda olan kilit mekanizmasını 30 dakika sonra aktive edeceğim.
+                        await _userManager.ResetAccessFailedCountAsync(user);
+                        //cookie ayarlarında yanlış girme sayısı vardı biz şimdi onu sıfırladık.
+                        await _userManager.SetLockoutEndDateAsync(user, DateTime.Now.AddMinutes(30));
+                        //yanlış giriş yapma durumunda olan kilit mekanizmasını 30 dakika sonra aktive edeceğim.
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else if (result.IsLockedOut) //kullanıcının oturumu kilitli ise
+                    {
+                        var lockoutEndDate = await _userManager.GetLockoutEndDateAsync(user); //kalan kilitleme süresini aldım.
 
-                            
-                            return RedirectToAction("Index", "User");
-                        }
-                        else if (result.IsLockedOut) //kullanıcının oturumu kilitli ise
+                        if (lockoutEndDate.HasValue)
                         {
-                            var lockoutEndDate = await _userManager.GetLockoutEndDateAsync(user); //kalan kilitleme süresini aldım.
+                            var timeLeft = lockoutEndDate.Value - DateTime.Now;
 
-                            if (lockoutEndDate.HasValue)
+                            if (timeLeft > TimeSpan.Zero)
                             {
-                                var timeLeft = lockoutEndDate.Value - DateTime.Now;
-
-                                if (timeLeft > TimeSpan.Zero)
-                                {
-                                    // Kilitlenme süresi dolmamış, kalan süreyi hesapla ve göster
-                                    ModelState.AddModelError("",$"Kalan süre: {timeLeft.TotalMinutes.ToString("F")} dakika");
-                                }
-                                else
-                                {
-                                    // Kilitlenme süresi dolmuş
-                                    ModelState.AddModelError("","Hesap artık kilitlenmiş değil.");
-                                }
+                                // Kilitlenme süresi dolmamış, kalan süreyi hesapla ve göster
+                                ModelState.AddModelError("", $"Kalan süre: {timeLeft.TotalMinutes.ToString("F")} dakika");
                             }
                             else
                             {
-                                // Kullanıcının kilitleme süresi yok
-                                Console.WriteLine("Kullanıcı hesap kilitleme özelliğine sahip değil.");
+                                // Kilitlenme süresi dolmuş
+                                ModelState.AddModelError("", "Hesap artık kilitlenmiş değil.");
                             }
                         }
                         else
                         {
-                            ModelState.AddModelError("", "Hatalı email ya da parola"); //burası
+                            // Kullanıcının kilitleme süresi yok
+                            Console.WriteLine("Kullanıcı hesap kilitleme özelliğine sahip değil.");
                         }
-
                     }
                     else
                     {
-                        ModelState.AddModelError("", "Hatalı emial veya parola!");
-                        
+                        ModelState.AddModelError("", "Hatalı email ya da parola"); //burası
                     }
+
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Hatalı emial veya parola!");
                 }
             }
             return View();

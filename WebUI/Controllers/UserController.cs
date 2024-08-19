@@ -98,6 +98,7 @@ namespace WebUI.Controllers
 
                 if (user is not null)
                 {
+                    ViewBag.Roles = await _roleManager.Roles.Select(i => i.Name).ToListAsync();
                     user.Email = model.Email;
                     user.FullName = model.FullName;
                     var result = await _userManager.UpdateAsync(user);
