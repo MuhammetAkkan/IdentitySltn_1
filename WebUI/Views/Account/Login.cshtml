@@ -3,11 +3,11 @@
 <h2>Login</h2>
 <br />
 
-<form asp-controller="Account" asp-action="Login" method="post">
+<form asp-action="Login" method="post">
     <div asp-validation-summary="All" class="text-dark">
         <div class="mb-3">
             <label asp-for="Email" class="form-label"></label>
-            <input type="email" asp-for="Email" class="form-control" id="emailInput" required />
+            <input type="email" asp-for="Email" class="form-control"/>
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
         <div class="mb-3">
@@ -20,5 +20,5 @@
             <label asp-for="RememberMe" class="form-check-label"></label>
         </div>
     </div>
-    <button class="btn btn-primary" type="submit">Kaydet</button>
+    <button class="btn btn-primary" type="submit">Giriş Yap</button>
 </form>
