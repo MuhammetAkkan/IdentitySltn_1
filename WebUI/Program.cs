@@ -11,7 +11,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<IdentityContext>(options => options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]));
 
 //Identity servisi
-builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<IdentityContext>();
+builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<IdentityContext>().AddDefaultTokenProviders();
 
 
 //burada IdentityOptions ı configure ederek opsiyonluyoruz(options)
@@ -28,10 +28,10 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Lockout.MaxFailedAccessAttempts = 5; // Maksimum hatalı giriş denemesi sayısı.
 
     options.Lockout.AllowedForNewUsers = true; // Yeni kullanıcılar için hesap kilitleme etkin mi?
-    options.User.RequireUniqueEmail = true; // Her kullanıcının benzersiz bir e-posta adresine sahip olmasını zorunlu kılar.
+    options.User.RequireUniqueEmail = true; // Her kulla    nıcının benzersiz bir e-posta adresine sahip olmasını zorunlu kılar.
     options.User.AllowedUserNameCharacters = "abcçdefghıijklmnoöpqrsştuüvwxyzABCÇDEFGHIİJKLMNOÖPQRSŞTUÜVWXYZ0123456789-._@+"; // Geçerli kullanıcı adı karakterleri.
 
-    options.SignIn.RequireConfirmedEmail = false; // Kullanıcının oturum açabilmesi için e-postasını doğrulaması gerekir.
+    options.SignIn.RequireConfirmedEmail = true; // Kullanıcının oturum açabilmesi için e-postasını doğrulaması gerekir.
     options.SignIn.RequireConfirmedPhoneNumber = false; // Kullanıcının oturum açabilmesi için telefon numarasını doğrulaması gerekir.
 
 });

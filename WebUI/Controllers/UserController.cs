@@ -71,7 +71,7 @@ namespace WebUI.Controllers
                 return View();
 
             ViewBag.Roles = await _roleManager.Roles.Select(i => i.Name).ToListAsync();
-            //rolleri sayfaya taşıdık.
+            //rol bir tümleşik veri idi ben sadece ViewBag e role.Name i taşıdım.
 
             var editViewModel = new EditViewModel
             {
@@ -98,7 +98,7 @@ namespace WebUI.Controllers
 
                 if (user is not null)
                 {
-                    ViewBag.Roles = await _roleManager.Roles.Select(i => i.Name).ToListAsync();
+                    ViewBag.Roles = await _roleManager.Roles.Select(i => i.Name).ToListAsync(); //sadece rol nameleri gönderdik.
                     user.Email = model.Email;
                     user.FullName = model.FullName;
                     var result = await _userManager.UpdateAsync(user);
@@ -107,7 +107,7 @@ namespace WebUI.Controllers
                     {
                         //şifreyi sil ve şifre oluştur
                         await _userManager.RemovePasswordAsync(user);
-                        await _userManager.AddPasswordAsync(user, model.Password); //user a model e girdiği passwo
+                        await _userManager.AddPasswordAsync(user, model.Password); //user a model e girdiği password
 
                     }
 

@@ -18,7 +18,7 @@ namespace WebUI.Controllers
 
         public IActionResult Index()
         {
-            var result = _roleManager.Roles;
+            var result = _roleManager.Roles; 
             return View(result);
         }
 

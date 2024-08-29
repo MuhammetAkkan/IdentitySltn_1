@@ -20,7 +20,7 @@ namespace WebUI.TagHelpers
         [HtmlAttributeName("asp-role-users")]
         public string RoleId { get; set; } = null!;
 
-        //override yazdıktan sonra çoğu geldi içinden seçtim.
+        //override yazdıktan sonra boşluk yap, çoğu geldi içinden seçtim.
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
             var userNames = new List<string>();
@@ -30,7 +30,7 @@ namespace WebUI.TagHelpers
             {
                 var users = await _userManager.Users.ToListAsync();
                 foreach (var user in users)
-                {
+                {   
                     if (await _userManager.IsInRoleAsync(user, role.Name))
                     {
                         userNames.Add(user.UserName ?? "");
