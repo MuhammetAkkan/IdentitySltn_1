@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebUI.Models;
@@ -6,6 +7,7 @@ using WebUI.ViewModels;
 
 namespace WebUI.Controllers
 {
+    [Authorize(Roles = "Admin")] //yapar isek admin ile ilgili tüm kısımlara authorize ve admin rolü şartı koymuş oluruz.
     public class UserController : Controller
     {
         private readonly UserManager<AppUser> _userManager; //db işlemleri için ıdentity referansı
@@ -16,11 +18,13 @@ namespace WebUI.Controllers
             _userManager = userManager;
             _roleManager = roleManager;
         }
+
         public IActionResult Index()
         {
             return View(_userManager.Users);
         }
 
+        
         public IActionResult Create()
         {
             return View();

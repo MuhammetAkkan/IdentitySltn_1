@@ -117,15 +117,14 @@ namespace WebUI.Controllers
                     //ilgili kullanıcı için token bilgisi üretilecek.
                     //bu token ise bir url olmalı
                     var url = Url.Action("ConfirmEmail", "Account", new { Id = user.Id, token = token });
-                    //ConfirmEmail metotuda ve Account Controllarda kimlik kazanan bir link oluşuyor. Bir örneği aşağıda yazmakta.
-                    ///Account/ConfirmEmail/9d310ed0-fad5-414d-9caa-fd71e9cc8a30?token=CfDJ8PmCJ8Q5AtVHkthk1O0UusxH%2FaUdNCgejMT4E4%2FHUqy8zOLbi8spThA2Czi%2BECYDdxCVJ8cvnSYfn59ENmnxGaHwvvUHGlPD%2BKMLvOQVrEOMiGmxHvbyi60Yx%2BovEU2dtu%2BMbCKpXTGGfjWKmgiCLki8y8PnB0Ta6OkJLHd1UhBhIBY1jXgaCxyQkozODAPe80vK0b2eKT0W4HQ4mjkWE4jTNXpxUllgK8HFZr5Dsq2nQEhBapbS5rhRA4PbOD5itQ%3D%3D
-                    ///
-
-
+                    
+                    /*Email gönderme formu olacaktı lakin servisleri ekleyemedim
+                     * 
+                     */
 
                     Console.WriteLine(url.ToString());
                     // Kullanıcı başarıyla oluşturulmuşsa
-                    TempData["message"] = "Mail adresinize gelen bağlantıya tıklayınız.";
+                    TempData["message"] = "Mail adresinize gelen bağlantıya tıklayınız. || Consola düşen linke gidiniz.";
                     return RedirectToAction("Login", "Account");
                 }
 
@@ -163,6 +162,11 @@ namespace WebUI.Controllers
             TempData["message"] = "Kullanıcı bulunumadı";
 
             return View();
+        }
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Login", "Account");
         }
     }
 }
