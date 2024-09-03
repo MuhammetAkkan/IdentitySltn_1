@@ -23,7 +23,7 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequireDigit = true; // Parolanın en az bir rakam içermesini zorunlu kılar.
     options.Password.RequireLowercase = false; // Parolanın en az bir küçük harf içermesini zorunlu kılar.
     options.Password.RequireNonAlphanumeric = false; // Parolanın en az bir özel karakter içermesini zorunlu kılar.
-    options.Password.RequireUppercase = false; // Parolanın en az bir büyük harf içermesini zorunlu kılar.
+    options.Password.RequireUppercase = false; // Parolanın en az bir büyük  harf içermesini zorunlu kılar.
     options.Password.RequiredLength = 5; // Parolanın en az 5 karakter uzunluğunda olmasını zorunlu kılar.
     options.Password.RequiredUniqueChars = 0; // Parolanın en az bir benzersiz karakter içermesini zorunlu kılar.
 
@@ -32,7 +32,7 @@ builder.Services.Configure<IdentityOptions>(options =>
 
     options.Lockout.AllowedForNewUsers = true; // Yeni kullanıcılar için hesap kilitleme etkin mi?
     options.User.RequireUniqueEmail = true; // Her kulla    nıcının benzersiz bir e-posta adresine sahip olmasını zorunlu kılar.
-    options.User.AllowedUserNameCharacters = "abcçdefghıijklmnoöpqrsştuüvwxyzABCÇDEFGHIİJKLMNOÖPQRSŞTUÜVWXYZ0123456789-._@+"; // Geçerli kullanıcı adı karakterleri.
+         // Geçerli kullanıcı adı karakterleri.
 
     options.SignIn.RequireConfirmedEmail = true; // Kullanıcının oturum açabilmesi için e-postasını doğrulaması gerekir.
     options.SignIn.RequireConfirmedPhoneNumber = false; // Kullanıcının oturum açabilmesi için telefon numarasını doğrulaması gerekir.
